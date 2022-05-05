@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(private alertCrtl: AlertController) {}
+  constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {}
 
 
 
@@ -35,7 +35,7 @@ async showAdd() {
       {
         text: 'Adicionar',
         handler: () => {
-          console.log('Adicionado com sucesso!')
+          this.adicionaTarefa(form.tarefa1);
         },
       },
     ],
@@ -43,4 +43,24 @@ async showAdd() {
 
   await alert.present();
 }
+
+// método para adicionar uma tarefa no local storage
+async adicionaTarefa(novaTarefa: string) {
+  //verifica se a variável está vazia ou não
+  if (novaTarefa.trim().length < 1) {
+    //caso a variável esteja vazia, irá apresentar uma mensagem no topo da tela
+    const toast = await this.toastCtrl.create({
+      message: 'Por favor, digite a tarefa! ',
+      // duração da mensagem( 2 segundos neste exemplo)
+      duration: 2000,
+      // posição da mensagem, neste caso será no topo.
+      position: 'top',
+    });
+
+  toast.present();
+  return;
+
+  }
+}
+
 }

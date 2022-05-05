@@ -8,6 +8,9 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
+  // adicionando uma lista de tarefas( um array de objetos para a tarefa)
+  tarefas: any[] = [];
+
   constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {}
 
 
@@ -34,7 +37,7 @@ async showAdd() {
       },
       {
         text: 'Adicionar',
-        handler: () => {
+        handler: (form) => {
           this.adicionaTarefa(form.tarefa1);
         },
       },
@@ -46,6 +49,10 @@ async showAdd() {
 
 // método para adicionar uma tarefa no local storage
 async adicionaTarefa(novaTarefa: string) {
+  // definição de uma variável com a estrutura da nossa tarefa
+  const tarefa = { nome:novaTarefa, realizada: false};
+  // adiciona a tarefa em uma lista de tarefas
+  this.tarefas.push(tarefa);
   //verifica se a variável está vazia ou não
   if (novaTarefa.trim().length < 1) {
     //caso a variável esteja vazia, irá apresentar uma mensagem no topo da tela
@@ -56,6 +63,7 @@ async adicionaTarefa(novaTarefa: string) {
       // posição da mensagem, neste caso será no topo.
       position: 'top',
     });
+  
 
   toast.present();
   return;

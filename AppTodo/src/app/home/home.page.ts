@@ -15,6 +15,12 @@ export class HomePage {
   constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {}
 
 
+  let tarefaSalva = localStorage.getItem('tarefaUsuario');
+  
+  if (tarefaSalva != null) {
+    this.tarefas = JSON.parse(tarefaSalva);
+  }
+
 
 async showAdd() {
   const alert = await this.alertCrtl.create({
@@ -72,6 +78,7 @@ async adicionaTarefa(novaTarefa: string) {
   return;
   }
 }
+
 salvaLocalStorage(){
   localStorage.setItem('tarefaUsuario', JSON.stringify(this.tarefas));
 }

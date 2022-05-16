@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
-import { toastController } from '@ionic/core';
+//import { toastController } from '@ionic/core';
 
 @Component({
   selector: 'app-home',
@@ -54,6 +54,10 @@ async adicionaTarefa(novaTarefa: string) {
   const tarefa = { nome:novaTarefa, realizada: false};
   // adiciona a tarefa em uma lista de tarefas
   this.tarefas.push(tarefa);
+
+  //depois de atualizar a nossa lista de tarefa, chama a função para salvar no Local Storage
+  this.salvaLocalStorage();
+
   //verifica se a variável está vazia ou não
   if (novaTarefa.trim().length < 1) {
     //caso a variável esteja vazia, irá apresentar uma mensagem no topo da tela
@@ -64,12 +68,12 @@ async adicionaTarefa(novaTarefa: string) {
       // posição da mensagem, neste caso será no topo.
       position: 'top',
     });
-  
-
   toast.present();
   return;
-
   }
+}
+salvaLocalStorage(){
+  localStorage.setItem('tarefaUsuario', JSON.stringify(this.tarefas));
 }
 
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { toastController } from '@ionic/core';
 
 @Component({
   selector: 'app-home',

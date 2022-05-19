@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { toastController } from '@ionic/core';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomePage {
   // adicionando uma lista de tarefas( um array de objetos para a tarefa)
   tarefas: any[] = [];
 
-  constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {
+  constructor(private alertCrtl: AlertController, private toastCtrl: ToastController, private actionSheetCrtl: ActionSheetController) {
   
     let tarefaSalva = localStorage.getItem('tarefaUsuario');
   
@@ -83,6 +84,30 @@ async adicionaTarefa(novaTarefa: string) {
   return;
   }
 }
+
+  async realizaAcoes(tarefa: any) {
+    const actionSheet = await this.actionSheetCrtl.create({
+      header: 'Qual ação realizar',
+      buttons: [{
+        text: tarefa.realizada ? 'Desmarcar' : 'Marcar',
+        icon: tarefa.realizada ? 'checkmark-circle' : 'radio-button-off-outline',
+        handler: () => {
+          tarefa.realizada = !tarefa.realizada;
+          this.salvaLocalStorage();
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+    const { role, data } = await actionSheet.onDidDismiss();
+  }
 
 salvaLocalStorage(){
   localStorage.setItem('tarefaUsuario', JSON.stringify(this.tarefas));

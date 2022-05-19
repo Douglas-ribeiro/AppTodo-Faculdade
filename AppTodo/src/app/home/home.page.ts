@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
-//import { toastController } from '@ionic/core';
+import { toastController } from '@ionic/core';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +12,22 @@ export class HomePage {
   // adicionando uma lista de tarefas( um array de objetos para a tarefa)
   tarefas: any[] = [];
 
-  constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {}
-
-
-  let tarefaSalva = localStorage.getItem('tarefaUsuario');
+  constructor(private alertCrtl: AlertController, private toastCtrl: ToastController) {
+  
+    let tarefaSalva = localStorage.getItem('tarefaUsuario');
   
   if (tarefaSalva != null) {
     this.tarefas = JSON.parse(tarefaSalva);
   }
 
 
-async showAdd() {
+  }
+
+
+   
+
+
+ async showAdd() {
   const alert = await this.alertCrtl.create({
     cssClass: 'my-custom-class',
     header: 'O que você deseja fazer?',
@@ -57,7 +62,7 @@ async showAdd() {
 // método para adicionar uma tarefa no local storage
 async adicionaTarefa(novaTarefa: string) {
   // definição de uma variável com a estrutura da nossa tarefa
-  const tarefa = { nome:novaTarefa, realizada: false};
+  const tarefa = { nome:novaTarefa, realizada: false };
   // adiciona a tarefa em uma lista de tarefas
   this.tarefas.push(tarefa);
 

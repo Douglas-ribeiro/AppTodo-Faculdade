@@ -21,11 +21,7 @@ export class HomePage {
     this.tarefas = JSON.parse(tarefaSalva);
   }
 
-
-  }
-
-
-   
+  } 
 
 
  async showAdd() {

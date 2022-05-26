@@ -59,12 +59,26 @@ export class HomePage {
 // método para adicionar uma tarefa no local storage
 async adicionaTarefa(novaTarefa: string) {
   // definição de uma variável com a estrutura da nossa tarefa
-  const tarefa = { nome:novaTarefa, realizada: false };
+  const tarefa = { nome:novaTarefa, realizada: 0 };
   // adiciona a tarefa em uma lista de tarefas
   this.tarefas.push(tarefa);
 
-  //depois de atualizar a nossa lista de tarefa, chama a função para salvar no Local Storage
-  this.salvaLocalStorage();
+  this.todoService.adicionaTarefa(tarefa.nome, tarefa.realizada )
+  .then( async(resposta)=>{
+    const toast = await this.toastCtrl.create({
+      message: 'Operação Realizada com Sucesso!',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  })
+  .catch(async(erro)=>{
+    const toast = await this.toastCtrl.create({
+      message: 'Erro ao realizar operação',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();  });
 
   //verifica se a variável está vazia ou não
   if (novaTarefa.trim().length < 1) {

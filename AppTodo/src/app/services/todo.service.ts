@@ -18,4 +18,16 @@ adicionaTarefa(tarefa: string, realizada: any){
   return this.http.post(url,param).toPromise();
 }
 
+listaTarefa(){
+  const url = 'http://localhost/ApiTodo/api.php';
+
+  return this.http.get(url).toPromise();
+}
+
+excluiTarefa(id: any){
+  const url = 'http://localhost/ApiTodo/api.php?id='+id;
+
+  return this.http.delete(url).toPromise();
+}
+
 }
